@@ -1,0 +1,37 @@
+stages:
+  - build
+  - test
+  - deploy
+
+build_client:
+  stage: build
+  image: node:14
+  script:
+    - cd client
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - client/build
+
+build_server:
+  stage: build
+  image: node:14
+  script:
+    - cd server
+    - npm install
+
+test:
+  stage: test
+  image: node:14
+  script:
+    - cd server
+    - npm test
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying to production..."
+    # Add deployment commands here, e.g., to Heroku or another hosting provider
+  only:
+    - master
